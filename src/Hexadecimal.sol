@@ -11,6 +11,18 @@ library Hexadecimal {
     bytes16 private constant _HEX_SYMBOLS = "0123456789abcdef";
     uint8 private constant _ADDRESS_LENGTH = 20;
 
+    function hexadecimal(bytes memory text) internal pure returns (bytes memory buffer) {
+      buffer = new bytes(2 * (text.length + 1));
+      buffer[0] = "0";
+      buffer[1] = "x";
+      for (uint i=0;i<text.length;i++) {
+        uint value = uint(uint8(text[i]));
+        uint bufferIndex = (i+1)*2;
+        buffer[bufferIndex] = _HEX_SYMBOLS[(value >> 4) & 0xf];
+        buffer[bufferIndex + 1] = _HEX_SYMBOLS[value & 0xf];
+      }
+    }
+
     /**
      * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation.
      */

@@ -6,6 +6,7 @@ import {Hexadecimal} from "../Hexadecimal.sol";
 contract HexadecimalTest is Test {
   using Hexadecimal for uint;
   using Hexadecimal for address;
+  using Hexadecimal for bytes;
 
   function testVagueOutputLength (uint i) public {
     assertLt(i.hexadecimal().length, 67);
@@ -13,5 +14,14 @@ contract HexadecimalTest is Test {
 
   function testOutputLength (address a) public {
     assertEq(a.hexadecimal().length, 42);
+  }
+
+  function testOutputLength (bytes calldata text) public {
+    assertEq(text.hexadecimal().length, 2 * (text.length + 1));
+  }
+
+  function testSpecificHexadecimalText() public {
+    assertEq0(bytes("").hexadecimal(), "0x");
+    assertEq0(bytes("abcd").hexadecimal(), "0x61626364");
   }
 }
