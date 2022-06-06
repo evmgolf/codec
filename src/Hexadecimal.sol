@@ -60,4 +60,40 @@ library Hexadecimal {
     function hexadecimal(address addr) internal pure returns (bytes memory) {
         return hexadecimal(uint256(uint160(addr)), _ADDRESS_LENGTH);
     }
+
+    function hexOffset(bytes1 b) internal pure returns (uint8) {
+      uint8 d = uint8(b);
+      if (d < 58) {
+        return d - 48;
+      } else {
+        return d - 87;
+      }
+    }
+
+    function decode(bytes memory text) internal pure returns (bytes memory buffer) {
+      buffer = new bytes((text.length - 1) / 2);
+      uint j;
+      for (uint i=2; i<text.length;) {
+        bytes1 upper = text[i++];
+        bytes1 lower = text[i++];
+
+        buffer[j++] = bytes1(
+          uint8(
+            (hexOffset(upper) << 4)
+            + hexOffset(lower)
+          )
+        );
+      }
+    }
+
+    function decodeAddress(bytes memory text) internal pure returns (address) {
+      bytes memory nullPad = new bytes(12);
+      return abi.decode(
+        bytes.concat(
+          nullPad,
+          decode(text)
+        ),
+        (address)
+      );
+    }
 }

@@ -24,4 +24,15 @@ contract HexadecimalTest is Test {
     assertEq0(bytes("").hexadecimal(), "0x");
     assertEq0(bytes("abcd").hexadecimal(), "0x61626364");
   }
+
+  function testDecode(bytes memory text) public {
+    if (text.length == 0) {
+      return;
+    }
+    assertEq0(text.hexadecimal().decode(), text);
+  }
+
+  function testDecodeAddress(address a) public {
+    assertEq(a.hexadecimal().decodeAddress(), a);
+  }
 }
