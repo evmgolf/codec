@@ -5,8 +5,13 @@ import {Decimal} from "../Decimal.sol";
 
 contract DecimalTest is Test {
   using Decimal for uint;
+  using Decimal for bytes;
 
   function testVagueOutputLength (uint i) public {
     assertLt(i.decimal().length, 79);
+  }
+
+  function testDecode(uint d) public {
+    assertEq(d.decimal().decodeUint(), d);
   }
 }

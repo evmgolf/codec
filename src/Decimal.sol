@@ -31,4 +31,15 @@ library Decimal {
             value /= 10;
         }
     }
+
+    function decodeUint(bytes memory text) internal pure returns (uint value) {
+      uint scale = 1;
+      for (uint i=text.length-1;;i--) {
+        value += (uint(uint8(text[i])) - 48) * scale;
+        if (i == 0) {
+          break;
+        }
+        scale *= 10;
+      }
+    }
 }
