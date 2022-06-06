@@ -65,6 +65,8 @@ library Hexadecimal {
       uint8 d = uint8(b);
       if (d < 58) {
         return d - 48;
+      } else if (d < 71) {
+        return d - 55;
       } else {
         return d - 87;
       }
