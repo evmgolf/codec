@@ -72,7 +72,7 @@ library Hexadecimal {
       }
     }
 
-    function decode(bytes memory text) internal pure returns (bytes memory buffer) {
+    function decodeBytes(bytes memory text) internal pure returns (bytes memory buffer) {
       buffer = new bytes((text.length - 1) / 2);
       uint j;
       for (uint i=2; i<text.length;) {
@@ -93,7 +93,7 @@ library Hexadecimal {
       return abi.decode(
         bytes.concat(
           nullPad,
-          decode(text)
+          decodeBytes(text)
         ),
         (address)
       );
