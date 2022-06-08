@@ -98,4 +98,8 @@ library Hexadecimal {
         (address)
       );
     }
+
+    function isHexadecimal(bytes memory text) internal pure returns (bool) {
+      return text.length >=2 && text[1] == "x";
+    }
 }
