@@ -21,5 +21,8 @@ jobs:
         with:
           version: nightly
 
+      - name: Build
+        forge build
+
       - name: Run tests
         run: forge test -vvv
